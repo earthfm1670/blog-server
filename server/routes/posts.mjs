@@ -2,9 +2,9 @@ import { Router } from "express";
 import { validateCreatePostData } from "../post.validation.mjs";
 import connectionPool from "../../utils/db.mjs";
 
-const blogPostRouter = Router();
+const postRouter = Router();
 
-blogPostRouter.post("/", [validateCreatePostData], async (req, res) => {
+postRouter.post("/", [validateCreatePostData], async (req, res) => {
   const newPost = req.body;
   if (
     !newPost.title ||
@@ -43,7 +43,7 @@ blogPostRouter.post("/", [validateCreatePostData], async (req, res) => {
   }
 });
 
-// blogPostRouter.put("/:postId", async (req, res) => {
+// postRouter.put("/:postId", async (req, res) => {
 //   const postIdFromClient = req.params.postId;
 //   const updatedPost = { ...req.body, updated_at: new Date() };
 
@@ -83,7 +83,7 @@ blogPostRouter.post("/", [validateCreatePostData], async (req, res) => {
 //   }
 // });
 
-blogPostRouter.get("/:postId", async (req, res) => {
+postRouter.get("/:postId", async (req, res) => {
   const postIdFromClient = req.params.postId;
   try {
     let results = await connectionPool.query(
@@ -101,7 +101,7 @@ blogPostRouter.get("/:postId", async (req, res) => {
   }
 });
 
-blogPostRouter.put("/:postId", async (req, res) => {
+postRouter.put("/:postId", [validateCreatePostData], async (req, res) => {
   const postIdFromClient = req.params.postId;
   const updatedPost = req.body;
   try {
@@ -141,7 +141,7 @@ blogPostRouter.put("/:postId", async (req, res) => {
   }
 });
 
-blogPostRouter.delete("/:postId", async (req, res) => {
+postRouter.delete("/:postId", async (req, res) => {
   const postIdFromClient = req.params.postId;
   try {
     let results = await connectionPool.query(
@@ -165,4 +165,4 @@ blogPostRouter.delete("/:postId", async (req, res) => {
   }
 });
 
-export default blogPostRouter;
+export default postRouter;

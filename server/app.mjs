@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import connectionPool from "./utils/db.mjs";
 import memberRouter from "./routes/member.mjs";
-import blogPostRouter from "./routes/posts.mjs";
+import postRouter from "./routes/posts.mjs";
 
 const app = express();
 const port = process.env.PORT || 4001;
@@ -10,7 +10,7 @@ const port = process.env.PORT || 4001;
 app.use(cors());
 app.use(express.json());
 app.use("/", memberRouter);
-app.use("/posts", blogPostRouter);
+app.use("/posts", postRouter);
 
 app.get("/profiles", (req, res) => {
   res.json({
